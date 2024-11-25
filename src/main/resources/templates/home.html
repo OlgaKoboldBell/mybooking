@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arrenvi.com - Домашня сторінка</title>
+    <link rel="stylesheet" href="/style.home/home_styleguide.css" />
+    <link rel="stylesheet" href="/style.home/home.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<!--<style>-->
+<!--    footer {-->
+<!--        background-color: #275271FF;-->
+<!--        color: white;-->
+<!--        padding: 20px 0;-->
+<!--    }-->
+
+<!--    .footer-container {-->
+<!--        display: flex;-->
+<!--        justify-content: space-around;-->
+<!--        flex-wrap: wrap;-->
+<!--        align-items: center;-->
+<!--    }-->
+
+<!--    .footer-section {-->
+<!--        text-align: center;-->
+<!--        margin-bottom: 15px;-->
+<!--    }-->
+
+<!--    .footer-section h4 {-->
+<!--        font-size: 18px;-->
+<!--        margin-bottom: 10px;-->
+<!--    }-->
+
+<!--    .footer-section p, .footer-section a {-->
+<!--        font-size: 14px;-->
+<!--        color: white;-->
+<!--        text-decoration: none;-->
+<!--    }-->
+
+<!--    .footer-section a:hover {-->
+<!--        text-decoration: underline;-->
+<!--    }-->
+
+<!--    .footer-bottom {-->
+<!--        text-align: center;-->
+<!--        margin-top: 20px;-->
+<!--        border-top: 1px solid rgba(255, 255, 255, 0.2);-->
+<!--        padding-top: 10px;-->
+<!--    }-->
+<!--    .center-content {-->
+<!--        display: flex;-->
+<!--        justify-content: center;-->
+<!--        align-items: center;-->
+<!--        gap: 20px; /* Відступ між заголовком і кнопкою */-->
+<!--        margin-top: 40px;-->
+<!--    }-->
+
+<!--    .map {-->
+<!--        width: 100%;-->
+<!--        height: 400px;-->
+<!--        position: relative;-->
+<!--        background-size: cover;-->
+<!--    }-->
+
+<!--    .hotel-marker {-->
+<!--        position: absolute;-->
+<!--        width: 20px;-->
+<!--        height: 20px;-->
+<!--        background-color: red;-->
+<!--        border-radius: 50%;-->
+<!--        cursor: pointer;-->
+<!--    }-->
+
+<!--    .hotel-marker a {-->
+<!--        display: none;-->
+<!--        position: absolute;-->
+<!--        left: 25px;-->
+<!--        top: -10px;-->
+<!--        color: white;-->
+<!--        text-decoration: none;-->
+<!--        background-color: rgba(0, 0, 0, 0.7);-->
+<!--        padding: 5px;-->
+<!--        border-radius: 5px;-->
+<!--    }-->
+
+<!--    .hotel-marker:hover a {-->
+<!--        display: inline-block;-->
+<!--    }-->
+
+<!--</style>-->
+</head>
+<body>
+<div class="container-fluid" style="background-color: #275271;">
+    <div class="navbar-top d-flex justify-content-between align-items-center">
+        <!-- Логотип зліва -->
+        <div class="frame">
+            <a class="nav-link" href="/"><img class="logo-component" src="/images/logo1.png" alt="Arrenvi Logo" /></a>
+        </div>
+        <!-- Посилання праворуч -->
+        <ul class="navbar-nav d-flex flex-row align-items-center justify-content-end" style="gap: 20px;">
+<!--            <li>-->
+<!--                &lt;!&ndash; Випадаючий список для вибору валюти &ndash;&gt;-->
+<!--                <form action="#" method="post">-->
+<!--                    <select name="currency" class="dropdown">-->
+<!--                        <option value="UAH">Гривня</option>-->
+<!--                        <option value="USD">Долар</option>-->
+<!--                        <option value="EUR">Євро</option>-->
+<!--                    </select>-->
+<!--                    <button type="submit" class="btn-select">Валюта</button>-->
+<!--                </form>-->
+<!--            </li>-->
+            <li>
+                <div style="display: flex; align-items: center; margin-right: 20px;">
+                    <a class="nav-link" href="/languages"> <img class="ukraine" src="images/Ukraine.png"/> <span th:text="${session.language}"></span></a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/home_partners">Зареєструвати своє помешкання</a>
+            </li>
+            <li class="nav-item" th:if="${session.currentUser != null}">
+                <a class="nav-link" href="/user_account">Кабінет користувача</a>
+            </li>
+            <li class="nav-item" th:if="${session.currentUser == null}">
+                <a class="nav-link btn-action" href="/login">Вхід</a>
+            </li>
+            <li class="nav-item" th:if="${session.currentUser == null}">
+                <a class="nav-link btn-action" href="/registration">Реєстрація</a>
+            </li>
+            <li class="nav-item" th:if="${session.currentUser != null}">
+                <form action="/logout" method="get">
+                    <button type="submit" class="btn-logout">Вихід</button>
+                </form>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="overlap">
+    <img class="backgrnd-header" src="/images/backgr_header.jpg" />
+    <div class="text-container">
+        <h2 style="color: #f0f0f0">Подорожуй з комфортом</h2>
+        <p style="color: #f0f0f0">Найкращі готелі, апартаменти та хостели... і не тільки</p>
+    </div>
+    <div class="search-block">
+        <form action="/search" method="POST">
+            <div class="place-field">
+                <div class="field-icon">
+                    <select name="city" id="city">
+                        <option value="">Куди вирушаєте?</option>
+                        <option th:each="city : ${cities}" th:value="${city.id}" th:text="${city.name} + ', ' + ${city.region}"></option>
+                    </select>
+
+                </div>
+            </div>
+            <div class="calendar-picker">
+                <label for="date" style="color: #f0f0f0;">Коли вирушаєте?</label>
+                <input type="date" id="date" name="date">
+            </div>
+            <div class="guest-picker">
+                <label for="guests" style="color: #f0f0f0;">Кількість гостей</label>
+                <input type="number" id="guests" name="guests" min="1" value="1">
+            </div>
+            <button type="submit" class="button-2">Шукати</button>
+        </form>
+    </div>
+</div>
+
+<div class="center-content">
+    <h2 class="mr-4">Виберіть помешкання на мапі</h2>
+    <a href="/all_hotels" class="nav-link btn-action" style="height: 30px; width: 350px; font-size: 34px; font-weight: bold; display: flex; justify-content: center; align-items: center;">Усі готелі</a>
+</div>
+<div id="map" class="map" style="position: relative; width: 100%; height: 400px; margin-top: 20px;">
+    <!-- Маркери готелів (координати в data-атрибутах) -->
+    <div th:each="hotel : ${hotels}"
+         class="hotel-marker"
+         th:attr="data-lat=${hotel.latitude}, data-lng=${hotel.longitude}, data-id=${hotel.id}, data-name=${hotel.name}"
+         style="position: absolute; border-radius: 50%; width: 20px; height: 20px;">
+    </div>
+</div>
+
+<h2 class="" th:text="${welcomeMessage}"></h2>
+
+<h2>Міста України</h2>
+<p>Виберіть, у якому місті України ви хочете відпочити</p>
+<div class="carousel-container">
+    <button class="carousel-btn prev" onclick="prevSlide()">&#10094;</button>
+    <div class="carousel-track">
+        <div class="carousel-item" th:each="city : ${cities}" style="display: inline-block;">
+            <a th:href="@{/sort_hotels_by_city/{cityId}(cityId=${city.id})}">
+                <img th:src="@{/cities/photo/{id}(id=${city.id})}" alt="Фото міста" class="city-photo">
+            </a>
+            <div class="city-info">
+                <h3 th:text="${city.name}"></h3>
+                <p th:text="${city.region}"></p>
+            </div>
+        </div>
+
+    </div>
+    <button class="carousel-btn next" onclick="nextSlide()">&#10095;</button>
+</div>
+<div th:if="${param.subscriptionError}" style="color: red; font-weight: bold;">
+    Ви повинні бути зареєстровані для підписки на newsletter!
+</div>
+<div th:if="${param.subscriptionSuccess}" style="color: green; font-weight: bold;">
+    Вітаємо! Підписку на новини оформлено!
+</div>
+<div class="newsletter">
+    <div class="overlap-group">
+        <img src="/images/newsletter.jpg" style="width: 100%; height: auto;" />
+        <p class="text-wrapper-6">Залишайтеся в курсі нових місць для відпочинку</p>
+        <div class="button-blue" style="margin-top: -70px">
+            <form action="/subscribe" method="post">
+                <button type="submit" class="button-2">Підписатися на newsletter</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- Admin Page Link -->
+<div th:if="${session.currentUser != null and session.currentUser.email == 'okobilska@gmail.com'}">
+    <a class="nav-link" style="color: #5c00e6;" href="/admin_page">Сторінка адміністратора</a>
+</div>
+
+<h2>Спробуйте найпопулярніші напрямки для подорожі</h2>
+<h2>Найпопулярніші готелі України</h2>
+<p>Забронюйте наші найпопулярніші унікальні помешкання</p>
+
+<div class="top-hotels-container" style="display: flex; justify-content: space-between;">
+    <div th:each="hotel : ${topHotels}" style="flex: 1; text-align: center;">
+            <img th:if="${hotel.coverImage != null}"
+                 th:src="@{/hotels/photo/{id}(id=${hotel.id})}"
+                 alt="Зображення готелю"
+                 width=400px; height=280px;
+                 style="display: block; margin: 10px;" />
+
+            <p class="hotel-name"
+              th:text="${hotel.name}"
+              th:attr="data-id=${hotel.id}"
+              style="display: block; cursor: pointer; text-decoration: underline;">
+        </p>
+    </div>
+</div>
+
+<!-- JavaScript для обробки кліків на назві готелю -->
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+        const hotelNames = document.querySelectorAll(".hotel-name");
+        hotelNames.forEach(hotelName => {
+            hotelName.addEventListener("click", function() {
+                const hotelId = this.getAttribute("data-id");
+                const hotelUrl = `/hotels/${hotelId}`;
+                window.location.href = hotelUrl;  // Перехід на сторінку готеля
+            });
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    var map = L.map('map').setView([48.3794, 31.1656], 6);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+    document.addEventListener("DOMContentLoaded", function() {
+        const hotelMarkers = document.querySelectorAll(".hotel-marker");
+        hotelMarkers.forEach(markerDiv => {
+            const lat = parseFloat(markerDiv.getAttribute("data-lat"));
+            const lng = parseFloat(markerDiv.getAttribute("data-lng"));
+            const hotelName = markerDiv.getAttribute("data-name");
+            const hotelId = markerDiv.getAttribute("data-id");
+            var marker = L.marker([lat, lng]).addTo(map);
+            const hotelUrl = `/hotels/${hotelId}`;
+            marker.bindPopup(`<a href="${hotelUrl}" style="text-decoration: none;">${hotelName}</a>`);
+        });
+    });
+</script>
+<script>
+    // для каруселі
+    let currentIndex = 0;
+    const cities = document.querySelectorAll('.carousel-item');
+    const totalCities = cities.length;
+    const visibleCities = 5;
+
+    function showSlides() {
+        cities.forEach(city => {
+            city.style.display = 'none';
+        });
+
+        for (let i = 0; i < visibleCities; i++) {
+            let index = (currentIndex + i) % totalCities;
+            cities[index].style.display = 'inline-block';
+        }
+    }
+
+    function nextSlide() {
+        currentIndex = (currentIndex + 1) % totalCities;
+        showSlides();
+    }
+
+    function prevSlide() {
+        currentIndex = (currentIndex - 1 + totalCities) % totalCities;
+        showSlides();
+    }
+
+    showSlides();
+</script>
+<!-- Футер -->
+<footer>
+    <div class="footer-container">
+        <div class="footer-section">
+<!--            <h4>Тех. підтримка</h4>-->
+            <h4><a class="nav-link" href="/support">Тех. підтримка</a></h4>
+            <p>Найпопулярніші питання</p>
+            <p>+380 97 255 220</p>
+            <p>Arrenvi@gmail.com</p>
+        </div>
+        <div class="footer-section">
+            <h4>Для бізнесу</h4>
+            <p><a class="nav-link" href="/home_partners">Зареєструвати помешкання</a></p>
+        </div>
+        <div class="footer-section">
+            <h4><a class="nav-link" href="/about_us">Про нас</a></h4>
+            <h5>Ми в соц мережах:</h5>
+            <a href="#"><img class="img" src="/images/instagram.png" /></a>
+            <a href="#"><img class="img" src="/images/facebook.png" /></a>
+        </div>
+        <div class="footer-section">
+            <p><a href="#">Версія для мобільних пристроїв</a></p>
+        </div>
+    </div>
+<!--    <div class="footer-bottom">-->
+<!--        <a class="nav-link" href="/"><p><span> <img class="logo-component" src="/images/logo1.png" alt="Arrenvi Logo" style="max-height: 30px;"/></span> Всі права захищені 2024</p></a>-->
+<!--    </div>-->
+    <div class="footer-bottom">
+        <a class="nav-link" href="/">
+            <img class="logo-component" src="/images/logo1.png" alt="Arrenvi Logo" style="max-height: 30px;"/>
+            <span>Всі права захищені 2024</span>
+        </a>
+    </div>
+
+</footer>
+</body>
+</html>

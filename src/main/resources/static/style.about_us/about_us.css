@@ -1,0 +1,191 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.about_us {
+    margin: 0 auto;
+    max-width: 1200px;
+    padding: 20px;
+}
+
+.header-image {
+    position: relative;
+    text-align: center;
+    color: white;
+}
+
+.backgrnd-header {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    filter: brightness(50%);
+}
+
+.header-image h1 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 48px;
+    color: white;
+    z-index: 1;
+}
+
+.content {
+    background-color: #f0f0f0;
+    padding: 30px;
+    color: #333;
+    line-height: 1.6;
+    margin: 20px 0;
+}
+
+.benefits {
+    margin: 30px 0;
+}
+
+.benefits h6 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #275271;
+}
+
+.frame-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.frame {
+    display: flex;
+    align-items: flex-start;
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.frame img.check-mark {
+    width: 40px;
+    height: 40px;
+    margin-right: 15px;
+}
+
+.frame .text-block {
+    max-width: 90%;
+}
+
+.frame .text-wrapper {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.frame p {
+    font-size: 16px;
+    margin: 5px 0 0;
+}
+
+.register-section {
+    position: relative;
+    text-align: center;
+    margin-top: 40px;
+    width: 100%;
+    height: 400px;
+}
+
+.register-section img {
+    width: 100%;
+    height: 400px;
+    opacity: 0.3;
+}
+
+.register-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: flex;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    justify-content: space-between;
+}
+
+.text-column h2,
+.text-column h3 {
+    color: #0f0f0f;
+}
+
+.button-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.nav-link {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px 0;
+    /*background-color: rgba(163, 193, 217, 1);*/
+    /*border: 1px solid wheat;*/
+    /*border-radius: 5px;*/
+    color: #000;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.nav-link:hover {
+    background-color: #275271;
+    color: white;
+}
+
+
+/*.reviews-container {*/
+/*    position: relative;*/
+/*    width: 100%;*/
+/*    max-width: 800px;*/
+/*    margin: 0 auto;*/
+/*    overflow: hidden; !* Це важливо для приховування зайвих відгуків поза видимістю *!*/
+/*}*/
+
+/*.reviews-wrapper {*/
+/*    display: flex;*/
+/*    overflow: hidden; !* Приховуємо відгуки, які виходять за межі видимої області *!*/
+/*    position: relative;*/
+/*    width: 100%;*/
+/*}*/
+
+/*.reviews-list {*/
+/*    display: flex;*/
+/*    transition: transform 0.5s ease; !* Анімація для плавного прокручування *!*/
+/*    width: 300%; !* Робимо цей блок ширшим для того, щоб уміщалися всі відгуки *!*/
+/*}*/
+
+/*.review-item {*/
+/*    min-width: 100%; !* Ширина кожного відгуку дорівнює ширині контейнера *!*/
+/*    padding: 10px;*/
+/*    box-sizing: border-box;*/
+/*}*/
+
+/*.carousel-btn {*/
+/*    position: absolute;*/
+/*    top: 50%;*/
+/*    transform: translateY(-50%);*/
+/*    background-color: rgba(0, 0, 0, 0.5);*/
+/*    color: white;*/
+/*    border: none;*/
+/*    padding: 10px;*/
+/*    cursor: pointer;*/
+/*}*/
+
+/*.prev {*/
+/*    left: 10px;*/
+/*}*/
+
+/*.next {*/
+/*    right: 10px;*/
+/*}*/
+
+
+.carousel-btn:hover {
+    background-color: #1d3e50;
+}

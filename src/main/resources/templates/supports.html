@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>support</title>
+    <link rel="stylesheet" href="globals.css" />
+    <link rel="stylesheet" href="/style.support/support.css" />
+    <link rel="stylesheet" href="/style.support/support_styleguide.css" />
+    <style>
+        .text-wrapper-11 {
+            text-decoration: none;
+        }
+        .container-fluid {
+            background-color: #275271;
+            padding: 10px 20px;
+        }
+
+        .navbar-top {
+            display: flex;
+            justify-content: space-between; /* Логотип зліва, інші елементи справа */
+            align-items: center;
+        }
+
+        /*.frame {*/
+        /*    order: 1; !* Лого залишається зліва *!*/
+        /*}*/
+
+        .navbar-nav {
+            display: flex;
+            justify-content: flex-end; /* Вирівнювання посилань справа */
+            align-items: center;
+            gap: 20px; /* Проміжки між елементами */
+            list-style: none; /* Прибираємо маркери списку */
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar-nav li {
+            list-style: none; /* Прибираємо маркування списку */
+        }
+
+        .nav-link {
+            color: #fff;
+            font-weight: bold; /* Жирний білий текст */
+            text-decoration: none; /* Прибираємо підкреслення */
+            transition: transform 0.3s ease, color 0.3s ease; /* Анімація для масштабування та зміни кольору */
+        }
+
+        .nav-link:hover {
+            transform: scale(1.1); /* Збільшуємо при наведенні */
+            color: #e7a188; /* Зміна кольору при наведенні */
+        }
+
+        .dropdown {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn-select {
+            background-color: #e7a188;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .btn-select:hover {
+            background-color: #1b3b51;
+        }
+
+        .btn-action, .btn-logout {
+            background-color: #e7a188;
+            color: white;
+            border: none;
+            padding: 5px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn-action:hover, .btn-logout:hover {
+            background-color: #1b3b51;
+        }
+        /* Стилі для повідомлень та кнопок */
+        .success-message {
+            color: green;
+            font-weight: bold;
+        }
+
+        .error-message {
+            color: red;
+            font-weight: bold;
+        }
+        footer {
+            background-color: #275271FF;
+            color: white;
+            padding: 20px 0;
+        }
+
+        .footer-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .footer-section {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .footer-section h4 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .footer-section p, .footer-section a {
+            font-size: 14px;
+            color: white;
+            text-decoration: none;
+        }
+
+        .footer-section a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            padding-top: 10px;
+        }
+
+    </style>
+</head>
+<body>
+<!--<header th:insert="sections/header::header"></header>-->
+<div class="container-fluid" style="background-color: #275271;">
+    <div class="navbar-top d-flex justify-content-between align-items-center">
+        <!-- Логотип зліва -->
+        <div class="frame">
+            <a class="nav-link" href="/"><img src="/images/logo1.png" alt="Arrenvi Logo" /></a>
+        </div>
+        <!-- Посилання праворуч -->
+        <ul class="navbar-nav d-flex flex-row align-items-center justify-content-end" style="gap: 20px;">
+<!--            <li>-->
+<!--                &lt;!&ndash; Випадаючий список для вибору валюти &ndash;&gt;-->
+<!--                <form action="#" method="post">-->
+<!--                    <select name="currency" class="dropdown">-->
+<!--                        <option value="UAH">Гривня</option>-->
+<!--                        <option value="USD">Долар</option>-->
+<!--                        <option value="EUR">Євро</option>-->
+<!--                    </select>-->
+<!--                    <button type="submit" class="btn-select">Валюта</button>-->
+<!--                </form>-->
+<!--            </li>-->
+            <li>
+                <!-- Випадаючий список для вибору мови -->
+<!--                <form method="post">-->
+<!--                    <select name="language" class="dropdown">-->
+<!--                        <option value="uk">Українська</option>-->
+<!--                        <option value="en">English</option>-->
+<!--                        <option value="fr">Français</option>-->
+<!--                    </select>-->
+<!--                    <button type="submit" class="btn-select">Мова</button>-->
+<!--                </form>-->
+                <div style="display: flex; align-items: center; margin-right: 20px;">
+                    <a class="nav-link" href="/languages"> <img class="ukraine" src="images/Ukraine.png"/> <span th:text="${session.language}"></span></a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/home_partners">Зареєструвати своє помешкання</a>
+            </li>
+            <li class="nav-item" th:if="${session.currentUser != null}">
+                <a class="nav-link" href="/user_account">Кабінет користувача</a>
+            </li>
+            <li class="nav-item" th:if="${session.currentUser == null}">
+                <a class="nav-link btn-action" href="/login">Вхід</a>
+            </li>
+            <li class="nav-item" th:if="${session.currentUser == null}">
+                <a class="nav-link btn-action" href="/registration">Реєстрація</a>
+            </li>
+            <li class="nav-item" th:if="${session.currentUser != null}">
+                <form action="/logout" method="get">
+                    <button type="submit" class="btn-logout">Вихід</button>
+                </form>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="header-image">
+    <img class="backgrnd-header" src="/images/about_us_1.jpg" alt="Про нас"/>
+    <h1>Питання та контакти</h1>
+</div>
+
+<section class="container">
+    <h2>Швидкі відповіді</h2>
+    <p>ВІДПОВІДІ НА НАЙПОШИРЕНІШІ ПИТАННЯ</p>
+    <p>Натисни на запитання і побачиш відповідь</p>
+
+    <button class="accordion">Як можна переконатися, що бронювання оплачено?</button>
+    <div class="panel">
+        <p>Вам буде надіслано підтвердження оплати на електронну пошту. Ви зможете завантажити підтвердження оплати у форматі PDF з листа-підтвердження бронювання.</p>
+    </div>
+
+    <button class="accordion">Чи потрібно мені оплатити щось додатково під час заїзду?</button>
+    <div class="panel">
+        <p>Інколи вас можуть попросити сплатити податки та інші збори під час заїзду. У цьому випадку ви побачите повну ціну до завершення бронювання і в листі-підтвердженні. Якщо ці дані не було зазначено, вам не потрібно нічого платити.</p>
+    </div>
+
+    <button class="accordion">Чи можу я скасувати своє бронювання?</button>
+    <div class="panel">
+        <p>Якщо бронювання за тарифом, вартість якого не повертається, його неможливо скасувати. Якщо для нього доступне безкоштовне скасування або часткове повернення вартості, відкрийте лист із підтвердженням або сторінку підтвердження в розділі "Бронювання" вашого акаунта: там буде зазначено розмір штрафу.</p>
+    </div>
+
+    <button class="accordion">Чи можу я внести зміни у своє бронювання?</button>
+    <div class="panel">
+        <p>Внести зміни в бронювання неможливо. Ви також не можете змінити дати проживання, ім'я гостя та адресу електронної пошти.</p>
+    </div>
+
+    <button class="accordion">Моє бронювання було скасовано або відхилено. Що робити?</button>
+    <div class="panel">
+        <p>Оскільки це бронювання від нашої компанії-партнера, у помешканні міг трапитися овербукінг (надмірні бронювання). У такому разі вони повідомляють нам. Після цього ми повертаємо вам оплату і скасовуємо ваше бронювання. Опрацювання може зайняти від 7 до 10 днів залежно від вашого банку. Якщо у вас є запитання, зверніться безпосередньо у свій банк.</p>
+    </div>
+
+    <button class="accordion">Я заплатив за своє бронювання, але не отримав електронний лист із підтвердженням. Що робити?</button>
+    <div class="panel">
+        <p>Щойно ваше бронювання буде підтверджено, ми надішлемо вам лист-підтвердження. Це займає приблизно 2 хвилини, але іноді може тривати довше. Перевірте свою папку з небажаною поштою або спамом, оскільки лист може потрапити туди помилково. Якщо ви не отримали жодних листів, зв'яжіться з нашою Службою підтримки.</p>
+    </div>
+
+    <button class="accordion">Як отримати додаткові послуги від помешкання?</button>
+    <div class="panel">
+        <p>Якщо ви хочете замовити додаткову послугу, як-от додаткове ліжко, ранній заїзд або трансфер до помешкання, будь ласка, зв'яжіться безпосередньо з помешканням за 1–2 дні до заїзду. Надання додаткових послуг можливе, але не гарантується.</p>
+    </div>
+
+    <button class="accordion">Я не можу знайти бронювання у своєму акаунті. Що робити?</button>
+    <div class="panel">
+        <p>Якщо ви бронювали через свій акаунт, то воно має з'явитися в розділі "Бронювання". Якщо під час бронювання ви не увійшли у свій акаунт, бронювання в ньому не з'явиться і додати його буде неможливо. Якщо у вас немає акаунта або під час бронювання ви в нього не увійшли, перевірте, чи отримали ви лист-підтвердження на свою електронну пошту.</p>
+    </div>
+</section>
+
+<!--<section class="container group-2">-->
+<!--    <h2>Напишіть нам</h2>-->
+<!--    <form th:action="@{/users/sendEmail}" method="post">-->
+<!--        <label for="topic">Тема повідомлення</label>-->
+<!--        <input type="text" id="topic" name="topic" placeholder="Тема повідомлення" required />-->
+
+<!--        <label for="message">Текст повідомлення</label>-->
+<!--        <textarea id="message" name="message" placeholder="Введіть ваше повідомлення" required></textarea>-->
+
+<!--        <button type="submit" class="button-2">Відправити</button>-->
+
+<!--        &lt;!&ndash; Виведення повідомлення, якщо користувач не зареєстрований &ndash;&gt;-->
+<!--        <p th:if="${notRegistered}" style="color: red;">Щоб відправляти повідомлення, треба зареєструватися!</p>-->
+<!--    </form>-->
+<!--</section>-->
+
+
+<!--<script>-->
+<!--    var acc = document.querySelectorAll(".accordion");-->
+
+<!--    acc.forEach(button => {-->
+<!--        button.addEventListener("click", function() {-->
+<!--            this.classList.toggle("active");-->
+<!--            let panel = this.nextElementSibling;-->
+<!--            panel.style.display = (panel.style.display === "block") ? "none" : "block";-->
+<!--        });-->
+<!--    });-->
+<!--</script>-->
+
+<!--<section class="container group-2">-->
+<!--    <h2>Напишіть нам</h2>-->
+<!--    <form th:action="@{/users/sendUserMessage}" method="post">-->
+<!--        <label for="topic">Тема повідомлення</label>-->
+<!--        <input type="text" id="topic" name="topic" placeholder="Тема повідомлення" required />-->
+
+<!--        <label for="message">Текст повідомлення</label>-->
+<!--        <textarea id="message" name="message" placeholder="Введіть ваше повідомлення" required></textarea>-->
+
+<!--        <button type="submit" class="button-2">Відправити</button>-->
+
+<!--        &lt;!&ndash; Виведення повідомлення, якщо користувач не зареєстрований &ndash;&gt;-->
+<!--        <p th:if="${notRegistered}" class="error-message">Щоб відправляти повідомлення, треба зареєструватися!</p>-->
+
+<!--    </form>-->
+<!--</section>-->
+<!--<p th:if="${errorMessage}" class="error-message" th:text="${errorMessage}"></p>-->
+<!--<p th:if="${successMessage}" class="success-message" th:text="${successMessage}"></p>-->
+<section class="container group-2">
+    <h2>Напишіть нам</h2>
+    <form th:action="@{/users/sendUserMessage}" method="post">
+        <label for="email">Ваша електронна адреса</label>
+        <input type="email" id="email" name="email" placeholder="Введіть ваш email" required />
+
+        <label for="topic">Тема повідомлення</label>
+        <input type="text" id="topic" name="topic" placeholder="Тема повідомлення" required />
+
+        <label for="message">Текст повідомлення</label>
+        <textarea id="message" name="message" placeholder="Введіть ваше повідомлення" required></textarea>
+
+        <button type="submit" class="button-2">Відправити</button>
+    </form>
+</section>
+
+<p th:if="${errorMessage}" class="error-message" th:text="${errorMessage}"></p>
+<p th:if="${successMessage}" class="success-message" th:text="${successMessage}"></p>
+
+
+<!--<footer th:insert="~{sections/footer :: footer}"></footer>-->
+<!-- Футер -->
+<footer>
+    <div class="footer-container">
+        <div class="footer-section">
+            <!--            <h4>Тех. підтримка</h4>-->
+            <a class="nav-link" href="/support">Тех. підтримка</a>
+            <p>Найпопулярніші питання</p>
+            <p>+380 97 255 220</p>
+            <p>Arrenvi@gmail.com</p>
+        </div>
+        <div class="footer-section">
+            <h4>Для бізнесу</h4>
+            <p><a class="nav-link" href="add_hotels">Зареєструвати помешкання</a></p>
+        </div>
+        <div class="footer-section">
+            <a class="nav-link" href="/about_us">Про нас</a>
+            <h4>Ми в соц мережах:</h4>
+            <a href="#"><img class="img" src="/images/instagram.png" /></a>
+            <a href="#"><img class="img" src="/images/facebook.png" /></a>
+        </div>
+        <div class="footer-section">
+            <p><a href="#">Версія для мобільних пристроїв</a></p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <a class="nav-link" href="/"><p><span> <img class="logo-component" src="/images/logo1.png" alt="Arrenvi Logo" style="max-height: 30px;"/></span> Всі права захищені 2024</p></a>
+    </div>
+</footer>
+
+<script>
+    var acc = document.querySelectorAll(".accordion");
+
+    acc.forEach(button => {
+        button.addEventListener("click", function() {
+            this.classList.toggle("active");
+            let panel = this.nextElementSibling;
+            panel.style.display = (panel.style.display === "block") ? "none" : "block";
+        });
+    });
+</script>
+</body>
+</html>
